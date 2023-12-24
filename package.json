@@ -1,0 +1,45 @@
+{
+  "name": "react-boiler-plate",
+  "version": "1.0.0",
+  "description": "react boiler plate",
+  "main": "server/index.js",
+  "engine": {
+    "node": "16.13.0",
+    "npm": "8.1.0"
+  },
+  "scripts": {
+    "start": "node ./server/index.js",
+    "backend": "nodemon ./server/index.js",
+    "frontend": "npm run start --prefix client",
+    "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+  },
+  "author": "John ahn",
+  "license": "ISC",
+  "dependencies": {
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.1.0",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "eslint": "^6.6.0",
+    "express": "^4.17.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "jest": "^24.9.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.20",
+    "multer": "^1.4.5-lts.1",
+    "react-redux": "^5.0.7",
+    "react-scripts": "^5.0.1",
+    "saslprep": "^1.0.3",
+    "supports-color": "^7.1.0",
+    "webpack": "^4.42.0",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.19.4"
+  }
+}
