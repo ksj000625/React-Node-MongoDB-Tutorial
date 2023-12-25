@@ -20,7 +20,7 @@ function Subscribe(props) {
 
 		let subscribedVariable = {
 			userTo: props.userTo,
-			userFrom: localStorage.getItem("userId"),
+			userFrom: props.userFrom,
 		};
 
 		Axios.post("/api/subscribe/subscribed", subscribedVariable).then(
@@ -33,6 +33,39 @@ function Subscribe(props) {
 			}
 		);
 	});
+
+	const onSubscribe = () => {
+		let subscribeVariable = {
+			userTo: props.userTo,
+			userFrom: props.userFrom,
+		};
+
+		if (Subscribed) {
+			// 이 사람을 구독 중이라면
+			Axios.post("/api/subscribe/unSubscribe", subscribeVariable).then(
+				(response) => {
+					if (response.data.success) {
+						setSubscribeNumber(SubscribeNumber - 1);
+						setSubscribed(!Subscribed);
+					} else {
+						alert("구독 취소하는 데 실패했습니다.");
+					}
+				}
+			);
+		} else {
+			// 이 사람을 구독 중이 아니라면
+			Axios.post("/api/subscribe/subscribe", subscribeVariable).then(
+				(response) => {
+					if (response.data.success) {
+						setSubscribeNumber(SubscribeNumber + 1);
+						setSubscribed(!Subscribed);
+					} else {
+						alert("구독하는 데 실패했습니다.");
+					}
+				}
+			);
+		}
+	};
 
 	return (
 		<div>
@@ -47,7 +80,7 @@ function Subscribe(props) {
 					fontSize: "1rem",
 					textTransform: "uppercase",
 				}}
-				onClick
+				onClick={onSubscribe}
 			>
 				{SubscribeNumber} {Subscribed ? "Subscribed" : "Subscribe"}
 			</button>
