@@ -36,6 +36,7 @@ function SingleComment(props) {
 			if (response.data.success) {
 				console.log(response.data.result);
 				setCommentValue("");
+				onClickReplyOpen();
 				props.refreshFunction(response.data.result);
 			} else {
 				alert("댓글을 저장하지 못했습니다.");
