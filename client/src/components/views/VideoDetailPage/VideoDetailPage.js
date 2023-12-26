@@ -24,8 +24,19 @@ function VideoDetailPage(props) {
 				alert("비디오 정보를 가져오길 실패했습니다.");
 			}
 		});
-		console.log(comment);
+
+		Axios.post("/api/comment/getComments", variable).then((response) => {
+			if (response.data.success) {
+				setComment(response.data.comments);
+			} else {
+				alert("댓글 정보를 가져오기를 실패했습니다.");
+			}
+		});
 	}, []);
+
+	const refreshFunction = (newComment) => {
+		setComment(comment.concat(newComment));
+	};
 
 	if (VideoDetail.writer) {
 		const subscribeButton = VideoDetail.writer._id !==
@@ -54,7 +65,11 @@ function VideoDetailPage(props) {
 							/>
 						</List.Item>
 						{/** Comments */}
-						<Comment postId={videoId} />
+						<Comment
+							refreshFunction={refreshFunction}
+							commentLists={comment}
+							postId={videoId}
+						/>
 					</div>
 				</Col>
 				<Col lg={6} xs={24}>
