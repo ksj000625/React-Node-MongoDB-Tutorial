@@ -14,6 +14,8 @@ function VideoDetailPage(props) {
 
 	const [VideoDetail, setVideoDetail] = useState([]);
 
+	const [comment, setComment] = useState([]);
+
 	useEffect(() => {
 		Axios.post("/api/video/getVideoDetail", variable).then((response) => {
 			if (response.data.success) {
@@ -22,6 +24,7 @@ function VideoDetailPage(props) {
 				alert("비디오 정보를 가져오길 실패했습니다.");
 			}
 		});
+		console.log(comment);
 	}, []);
 
 	if (VideoDetail.writer) {
@@ -51,7 +54,7 @@ function VideoDetailPage(props) {
 							/>
 						</List.Item>
 						{/** Comments */}
-						<Comment />
+						<Comment postId={videoId} />
 					</div>
 				</Col>
 				<Col lg={6} xs={24}>
