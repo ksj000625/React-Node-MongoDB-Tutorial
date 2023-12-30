@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Comment, Avatar, Button, Input } from "antd";
+import React, { useState } from "react";
+import { Comment, Avatar } from "antd";
 import { useSelector } from "react-redux";
 import Axios from "axios";
 
-const { TextArea } = Input;
+import LikesDisLikes from "./LikesDisLikes";
 
 function SingleComment(props) {
 	const videoId = props.postId;
-	const writerId = props.writerId;
 
 	const user = useSelector((state) => state.user);
 
@@ -45,6 +44,10 @@ function SingleComment(props) {
 	};
 
 	const actions = [
+		<LikesDisLikes
+			commentId={props.comment._id}
+			userId={localStorage.getItem("userId")}
+		/>,
 		<span onClick={onClickReplyOpen} key="comment-basic-reply-to">
 			Repy to
 		</span>,
