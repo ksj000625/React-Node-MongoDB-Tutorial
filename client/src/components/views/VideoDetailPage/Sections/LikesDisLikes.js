@@ -57,10 +57,57 @@ function LikesDisLikes(props) {
 
 	const onLike = () => {
 		if (likeAction === null) {
+			// like이 클릭이 되어있지 않았던 경우
 			Axios.post("/api/like/upLike", variable).then((response) => {
 				if (response.data.success) {
+					setLikes(likes + 1);
+					setLikeAction("liked");
+
+					if (dislikeAction !== null) {
+						setDislikeAction(null);
+						setDislikes(dislikes - 1);
+					}
 				} else {
 					alert("likes를 올리지 못했습니다.");
+				}
+			});
+		} else {
+			// like이 클릭이 되어있던 경우
+			Axios.post("/api/like/unLike", variable).then((response) => {
+				if (response.data.success) {
+					setLikes(likes - 1);
+					setLikeAction(null);
+				} else {
+					alert("likes를 내리지 못했습니다.");
+				}
+			});
+		}
+	};
+
+	const onDislike = () => {
+		if (dislikeAction !== null) {
+			// dislike이 이미 클릭되어있을 경우
+			Axios.post("/api/like/unDislike", variable).then((response) => {
+				if (response.data.success) {
+					setDislikes(dislikes - 1);
+					setDislikeAction(null);
+				} else {
+					alert("dislike을 내리지 못했습니다.");
+				}
+			});
+		} else {
+			// dislike이 클릭되어있지 않은 경우
+			Axios.post("/api/like/upDislike", variable).then((response) => {
+				if (response.data.success) {
+					setDislikes(dislikes + 1);
+					setDislikeAction("disliked");
+
+					if (likeAction !== null) {
+						setLikeAction(null);
+						setLikes(likes - 1);
+					}
+				} else {
+					alert("dislike을 내리지 못했습니다.");
 				}
 			});
 		}
@@ -68,7 +115,7 @@ function LikesDisLikes(props) {
 
 	return (
 		<div>
-			<span key="comment-basic-like">
+			<span>
 				<Tooltip title="Like">
 					<Icon
 						type="like"
@@ -88,7 +135,7 @@ function LikesDisLikes(props) {
 					<Icon
 						type="dislike"
 						theme={dislikeAction === "disliked" ? "filled" : "outlined"}
-						onClick
+						onClick={onDislike}
 					/>
 				</Tooltip>
 				<span
